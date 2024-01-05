@@ -10,38 +10,34 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 public class EmployeeController {
+
     @Autowired
-   private EmployeeRepository employeeRepository;
+    private EmployeeRepository employeeRepository;
+
     @PostMapping("/user")
-    public String saveEmployee(@RequestBody Employee e){
-        return employeeRepository.saveEmployee(e);
+    public String saveEmployee(@RequestBody Employee e) {
+        employeeRepository.save(e);
+        return "Employee saved successfully";
     }
+
     @GetMapping("/user/{id}")
-    public Employee getByID(@PathVariable int id){
-        return employeeRepository.getByID(id);
-
+    public Employee getByID(@PathVariable int id) {
+        return employeeRepository.findById(id).orElse(null);
     }
+
     @GetMapping("/users")
-    public List<Employee> allEmployees(){
-        return employeeRepository.allEmployee();
+    public List<Employee> allEmployees() {
+        return employeeRepository.findAll();
     }
 
-   @PutMapping("/update/{id}")
-   public void updateEmployee( @PathVariable int id,@RequestBody Employee updatedEmployee) {
+    @PutMapping("/update/{id}")
+    public void updateEmployee(@PathVariable int id, @RequestBody Employee updatedEmployee) {
         updatedEmployee.setId(id);
-        employeeRepository.updateEmployee(updatedEmployee);
-  }
-
-
-
-
-
+        employeeRepository.save(updatedEmployee);
+    }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteByID(@PathVariable int id){
-         employeeRepository.deleteByID(id);
+    public void deleteByID(@PathVariable int id) {
+        employeeRepository.deleteById(id);
     }
-
-
-
 }
