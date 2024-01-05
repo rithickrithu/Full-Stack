@@ -70,7 +70,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 //    }
 
    public void updateEmployee(Employee employee) {
-      String sql = "UPDATE employee SET name=?, age=?, phoneNo=?, city=?, lastUpdated=CURRENT_TIMESTAMP  WHERE id=?";
+      String sql = "UPDATE employee SET name=?, age=?, phoneNo=?, city=?, updatedTime=CURRENT_TIMESTAMP  WHERE id=?";
       jdbcTemplate.update(sql, employee.getName(), employee.getAge(), employee.getPhoneNo(), employee.getCity(),employee.getId());
 
 
@@ -86,7 +86,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
         // Use try-catch block to handle exceptions
         try {
             Timestamp currentTimestamp = Timestamp.from(Instant.now());
-            jdbcTemplate.update("INSERT INTO employee (name, age, phoneNo, city,lastUpdated) VALUES (?, ?, ?, ?,?)",
+            jdbcTemplate.update("INSERT INTO employee (name, age, phoneNo, city,createdTime) VALUES (?, ?, ?, ?,?)",
                     e.getName(), e.getAge(), e.getPhoneNo(), e.getCity(),currentTimestamp);
             return "Employee saved successfully";
         } catch (Exception ex) {

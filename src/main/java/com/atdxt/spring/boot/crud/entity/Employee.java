@@ -1,25 +1,37 @@
 package com.atdxt.spring.boot.crud.entity;
 
 
-import java.sql.Timestamp;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.sql.Timestamp;
+@Getter
+@Setter
 public class Employee {
     private int id;
     private String name;
     private int age;
     private int phoneNo;
     private String city;
-    private Timestamp lastupdated;
+    private Timestamp createdTime;
+    private Timestamp updatedTime;
 
-    public Timestamp getLastupdated() {
-        return lastupdated;
+
+    public Timestamp getCreatedTime() {
+        return createdTime;
     }
 
-    public void setLastupdated(Timestamp lastupdated) {
-        this.lastupdated = lastupdated;
+    public void setCreatedTime(Timestamp createdTime) {
+        this.createdTime = createdTime;
     }
 
+    public Timestamp getUpdatedTime() {
+        return updatedTime;
+    }
 
+    public void setUpdatedTime(Timestamp updatedTime) {
+        this.updatedTime = updatedTime;
+    }
 
 
     public int getId() {
