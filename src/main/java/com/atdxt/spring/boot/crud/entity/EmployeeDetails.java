@@ -1,33 +1,40 @@
 package com.atdxt.spring.boot.crud.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
+
 @Entity
-@Data
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="EmployeeDetails")
-
+@Table(name = "EmployeeDetails")
 public class EmployeeDetails {
     @Id
-    @Column(name ="id", length =50)
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
-    @Column(name ="department", length =50)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+
+    @Column(name = "department", length = 50)
     private String department;
-    @Column(name ="position", length =50)
+
+    @Column(name = "position", length = 50)
     private String position;
-    @Column(name ="salary", length =50)
+
+    @Column(name = "salary")
     private int salary;
 
-    public int getId() {
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id")
+    private Employee employee;
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -54,4 +61,6 @@ public class EmployeeDetails {
     public void setSalary(int salary) {
         this.salary = salary;
     }
+
+
 }

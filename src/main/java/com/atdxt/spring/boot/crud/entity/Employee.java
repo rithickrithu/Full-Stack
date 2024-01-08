@@ -1,37 +1,51 @@
 package com.atdxt.spring.boot.crud.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.sql.Timestamp;
 import java.time.Instant;
 
-@Entity
 
-//@Getter
-//@Setter
-//@Data
+@Entity
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="employee1")
+@Table(name = "employee1")
 public class Employee {
     @Id
-    @Column(name="id", length = 50)
-    @GeneratedValue(strategy = GenerationType.AUTO )
-    private int id;
-    @Column(name="name", length = 50)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+
+
+    @Column(name = "name", length = 50)
     private String name;
-    @Column(name="age", length = 50)
+
+    @Column(name = "age")
     private int age;
-    @Column(name="phoneNo", length = 50)
+
+    @Column(name = "phoneNo")
     private int phoneNo;
-    @Column(name="city", length = 50)
+
+    @Column(name = "city", length = 50)
     private String city;
-    @Column(name="createdTime", length = 50)
+
+    @Column(name = "createdTime", length = 50)
     private Timestamp createdTime;
-    @Column(name="updatedTime", length = 50)
+
+    @Column(name = "updatedTime", length = 50)
     private Timestamp updatedTime;
+
+    @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+
+    @JsonIgnoreProperties("employee")
+    EmployeeDetails employeeDetails;
+
 
     @PrePersist
     protected void onCreate() {
@@ -43,29 +57,11 @@ public class Employee {
         this.updatedTime = Timestamp.from(Instant.now());
     }
 
-
-    public Timestamp getCreatedTime() {
-        return createdTime;
-    }
-
-    public void setCreatedTime(Timestamp createdTime) {
-        this.createdTime = createdTime;
-    }
-
-    public Timestamp getUpdatedTime() {
-        return updatedTime;
-    }
-
-    public void setUpdatedTime(Timestamp updatedTime) {
-        this.updatedTime = updatedTime;
-    }
-
-
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -101,6 +97,27 @@ public class Employee {
         this.city = city;
     }
 
+    public Timestamp getCreatedTime() {
+        return createdTime;
+    }
 
+    public void setCreatedTime(Timestamp createdTime) {
+        this.createdTime = createdTime;
+    }
 
+    public Timestamp getUpdatedTime() {
+        return updatedTime;
+    }
+
+    public void setUpdatedTime(Timestamp updatedTime) {
+        this.updatedTime = updatedTime;
+    }
+
+    public EmployeeDetails getEmployeeDetails() {
+        return employeeDetails;
+    }
+
+    public void setEmployeeDetails(EmployeeDetails employeeDetails) {
+        this.employeeDetails = employeeDetails;
+    }
 }
