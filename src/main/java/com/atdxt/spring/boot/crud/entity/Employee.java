@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.time.Instant;
 

@@ -78,24 +78,45 @@ public List<Employee> getAlluser() {
         });
     }
 
+//    public String saveEntity(Map<String, Object> entityMap) {
+//        try {
+//            if (entityMap.containsKey("employee1")) {
+//                Employee employee = objectMapper.convertValue(entityMap.get("employee1"), Employee.class);
+//                employeeRepository.save(employee);
+//            }
+//
+//            if (entityMap.containsKey("EmployeeDetails")) {
+//                EmployeeDetails employeeDetails = objectMapper.convertValue(entityMap.get("EmployeeDetails"), EmployeeDetails.class);
+//                employeeDetailsRepository.save(employeeDetails);
+//            }
+//
+//            return "Entities saved successfully";
+//        } catch (Exception ex) {
+//            return "Error saving entities: " + ex.getMessage();
+//        }
+//    }
+
     public String saveEntity(Map<String, Object> entityMap) {
         try {
-            if (entityMap.containsKey("employee1")) {
+            if (entityMap.containsKey("employee1") && entityMap.containsKey("EmployeeDetails")) {
                 Employee employee = objectMapper.convertValue(entityMap.get("employee1"), Employee.class);
-                employeeRepository.save(employee);
-            }
-
-            if (entityMap.containsKey("EmployeeDetails")) {
                 EmployeeDetails employeeDetails = objectMapper.convertValue(entityMap.get("EmployeeDetails"), EmployeeDetails.class);
-                employeeDetailsRepository.save(employeeDetails);
-            }
 
-            return "Entities saved successfully";
+                // Set the relationship bidirectionally
+                employee.setEmployeeDetails(employeeDetails);
+                employeeDetails.setEmployee(employee);
+
+                // Save the entities
+                employeeRepository.save(employee);
+
+                return "Entities saved successfully";
+            } else {
+                return "Error: Both employee1 and EmployeeDetails must be present in the input map.";
+            }
         } catch (Exception ex) {
             return "Error saving entities: " + ex.getMessage();
         }
     }
-
 
 
     public void deleteEntityById(Integer id) {
