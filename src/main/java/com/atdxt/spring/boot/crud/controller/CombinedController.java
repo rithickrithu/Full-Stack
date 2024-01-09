@@ -30,10 +30,13 @@ public class CombinedController {
     public List<Employee> getAllEntities() {
         return combinedService.getAlluser();
     }
-
     @PutMapping("/update/{id}")
     public void updateEntity(@PathVariable Integer id, @RequestBody Map<String, Object> updatedEntity) {
         combinedService.updateEntity(id, updatedEntity);
+    }
+    @DeleteMapping("/delete/{id}")
+    public void deleteEntityById(@PathVariable Integer id) {
+        combinedService.deleteEntityById(id);
     }
 
 }

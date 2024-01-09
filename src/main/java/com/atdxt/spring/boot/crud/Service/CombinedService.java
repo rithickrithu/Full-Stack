@@ -33,15 +33,14 @@ public class CombinedService {
 //        List<Object> combinedEntities = Collections.singletonList(employeeRepository.findAllWithDetails());
 //        return combinedEntities;
 //    }
-    public List<Employee> getAlluser(){
-        try {
-            return employeeRepository.findAll();
-
-        }
-        catch (Exception e){
-            throw new RuntimeException();
-        }
+public List<Employee> getAlluser() {
+    try {
+        return employeeRepository.findAll();
+    } catch (Exception e) {
+        throw new RuntimeException(e);
     }
+}
+
 
 
     public List<Object> getEntityById(Integer id) {
@@ -99,13 +98,13 @@ public class CombinedService {
 
 
 
-    public void deleteEntityById(Long id) {
+    public void deleteEntityById(Integer id) {
         // Delete EmployeeDetails first to avoid foreign key constraint issues
-        Optional<EmployeeDetails> employeeDetailsOptional = employeeDetailsRepository.findById(id.intValue());
+        Optional<EmployeeDetails> employeeDetailsOptional = employeeDetailsRepository.findById(id);
         employeeDetailsOptional.ifPresent(employeeDetailsRepository::delete);
 
         // Delete Employee
-        employeeRepository.deleteById(id.intValue());
+        employeeRepository.deleteById(id);
     }
 
 

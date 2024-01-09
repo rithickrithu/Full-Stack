@@ -1,8 +1,7 @@
 package com.atdxt.spring.boot.crud.entity;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -15,6 +14,7 @@ import java.time.Instant;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Table(name = "employee1")
 public class Employee {
     @Id
@@ -42,6 +42,7 @@ public class Employee {
     private Timestamp updatedTime;
 
     @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
 
     @JsonIgnoreProperties("employee")
     EmployeeDetails employeeDetails;

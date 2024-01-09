@@ -1,7 +1,6 @@
 package com.atdxt.spring.boot.crud.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,6 +10,7 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Table(name = "EmployeeDetails")
 public class EmployeeDetails {
     @Id
@@ -28,6 +28,8 @@ public class EmployeeDetails {
     private int salary;
 
     @OneToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("employeeDetails")
+    @JsonBackReference
     @JoinColumn(name = "id")
     private Employee employee;
     public Long getId() {
