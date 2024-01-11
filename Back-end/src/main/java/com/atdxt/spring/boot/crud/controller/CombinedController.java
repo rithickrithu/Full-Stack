@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@CrossOrigin("http://localhost:3000")
 @RequestMapping("/api")
 public class CombinedController {
 
@@ -28,7 +29,7 @@ public class CombinedController {
 
     @GetMapping("/get-all")
     public List<Employee> getAllEntities() {
-        return combinedService.getAlluser();
+        return combinedService.getAllEntitiesOrderedById();
     }
     @PutMapping("/update/{id}")
     public void updateEntity(@PathVariable Integer id, @RequestBody Map<String, Object> updatedEntity) {

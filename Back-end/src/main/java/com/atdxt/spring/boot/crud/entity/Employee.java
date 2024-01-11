@@ -5,9 +5,10 @@ import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.math.BigInteger;
+
 import java.sql.Timestamp;
 import java.time.Instant;
+
 
 
 @Entity
@@ -21,6 +22,7 @@ public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+
     private Long id;
 
 
@@ -31,7 +33,7 @@ public class Employee {
     private int age;
 
     @Column(name = "phoneNo")
-    private int phoneNo;
+    private String phoneNo;
 
     @Column(name = "city", length = 50)
     private String city;
@@ -44,7 +46,6 @@ public class Employee {
 
     @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
-
     @JsonIgnoreProperties("employee")
     EmployeeDetails employeeDetails;
 
@@ -83,11 +84,11 @@ public class Employee {
         this.age = age;
     }
 
-    public int getPhoneNo() {
+    public String getPhoneNo() {
         return phoneNo;
     }
 
-    public void setPhoneNo(int phoneNo) {
+    public void setPhoneNo(String phoneNo) {
         this.phoneNo = phoneNo;
     }
 

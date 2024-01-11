@@ -27,10 +27,14 @@ public class EmployeeDetails {
     @Column(name = "salary")
     private int salary;
 
+    public Employee getEmployee() {
+        return employee;
+    }
+
     @OneToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties("employeeDetails")
     @JsonBackReference
-    @JoinColumn(name = "employee_id")
+    @JoinColumn(name = "id")
     private Employee employee;
     public Long getId() {
         return id;
@@ -65,4 +69,6 @@ public class EmployeeDetails {
     }
 
 
+    public void setEmployee(Employee employee) {
+    }
 }

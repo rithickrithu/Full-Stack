@@ -5,6 +5,7 @@ import com.atdxt.spring.boot.crud.Repository.EmployeeRepository;
 import com.atdxt.spring.boot.crud.entity.Employee;
 import com.atdxt.spring.boot.crud.entity.EmployeeDetails;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,18 +29,23 @@ public class CombinedService {
 
     @Autowired
     private ObjectMapper objectMapper;
+    public List<Employee> getAllEntitiesOrderedById() {
+        return employeeRepository.findAllWithDetailsOrderById();
+    }
+
+
 
 //    public List<Object> getAllEntities() {
 //        List<Object> combinedEntities = Collections.singletonList(employeeRepository.findAllWithDetails());
 //        return combinedEntities;
 //    }
-public List<Employee> getAlluser() {
-    try {
-        return employeeRepository.findAll();
-    } catch (Exception e) {
-        throw new RuntimeException(e);
-    }
-}
+//public List<Employee> getAlluser() {
+//    try {
+//        return employeeRepository.findAll();
+//    } catch (Exception e) {
+//        throw new RuntimeException(e);
+//    }
+//}
 
 
 
@@ -55,46 +61,52 @@ public List<Employee> getAlluser() {
         return combinedEntityList;
     }
 
-    public void updateEntity(Integer id, Map<String, Object> updatedEntityMap) {
-        Optional<Employee> existingEmployee = employeeRepository.findById(id);
-
-        existingEmployee.ifPresent(employee -> {
-            Employee updatedEmployee = objectMapper.convertValue(updatedEntityMap.get("employee1"), Employee.class);
-            employee.setName(updatedEmployee.getName());
-            employee.setAge(updatedEmployee.getAge());
-            employee.setPhoneNo(updatedEmployee.getPhoneNo());
-            employee.setCity(updatedEmployee.getCity());
-            employeeRepository.save(employee);
-        });
-
-        Optional<EmployeeDetails> existingEmployeeDetails = employeeDetailsRepository.findById(id);
-
-        existingEmployeeDetails.ifPresent(employeeDetails -> {
-            EmployeeDetails updatedEmployeeDetails = objectMapper.convertValue(updatedEntityMap.get("EmployeeDetails"), EmployeeDetails.class);
-            employeeDetails.setDepartment(updatedEmployeeDetails.getDepartment());
-            employeeDetails.setPosition(updatedEmployeeDetails.getPosition());
-            employeeDetails.setSalary(updatedEmployeeDetails.getSalary());
-            employeeDetailsRepository.save(employeeDetails);
-        });
-    }
-
-//    public String saveEntity(Map<String, Object> entityMap) {
-//        try {
-//            if (entityMap.containsKey("employee1")) {
-//                Employee employee = objectMapper.convertValue(entityMap.get("employee1"), Employee.class);
-//                employeeRepository.save(employee);
-//            }
+//    public void updateEntity(Integer id, Map<String, Object> updatedEntityMap) {
+//        Optional<Employee> existingEmployee = employeeRepository.findById(id);
 //
-//            if (entityMap.containsKey("EmployeeDetails")) {
-//                EmployeeDetails employeeDetails = objectMapper.convertValue(entityMap.get("EmployeeDetails"), EmployeeDetails.class);
-//                employeeDetailsRepository.save(employeeDetails);
-//            }
+//        existingEmployee.ifPresent(employee -> {
+//            Employee updatedEmployee = objectMapper.convertValue(updatedEntityMap.get("employee1"), Employee.class);
+//            employee.setName(updatedEmployee.getName());
+//            employee.setAge(updatedEmployee.getAge());
+//            employee.setPhoneNo(updatedEmployee.getPhoneNo());
+//            employee.setCity(updatedEmployee.getCity());
+//            employeeRepository.save(employee);
+//        });
 //
-//            return "Entities saved successfully";
-//        } catch (Exception ex) {
-//            return "Error saving entities: " + ex.getMessage();
-//        }
+//        Optional<EmployeeDetails> existingEmployeeDetails = employeeDetailsRepository.findById(id);
+//
+//        existingEmployeeDetails.ifPresent(employeeDetails -> {
+//            EmployeeDetails updatedEmployeeDetails = objectMapper.convertValue(updatedEntityMap.get("EmployeeDetails"), EmployeeDetails.class);
+//            employeeDetails.setDepartment(updatedEmployeeDetails.getDepartment());
+//            employeeDetails.setPosition(updatedEmployeeDetails.getPosition());
+//            employeeDetails.setSalary(updatedEmployeeDetails.getSalary());
+//            employeeDetailsRepository.save(employeeDetails);
+//        });
 //    }
+@Transactional
+public void updateEntity(Integer id, Map<String, Object> updatedEntityMap) {
+    // Update Employee
+    Optional<Employee> existingEmployee = employeeRepository.findById(id);
+    existingEmployee.ifPresent(employee -> {
+        Employee updatedEmployee = objectMapper.convertValue(updatedEntityMap.get("employee1"), Employee.class);
+        employee.setName(updatedEmployee.getName());
+        employee.setAge(updatedEmployee.getAge());
+        employee.setPhoneNo(updatedEmployee.getPhoneNo());
+        employee.setCity(updatedEmployee.getCity());
+        employeeRepository.save(employee);
+    });
+
+    // Update EmployeeDetails
+    Optional<EmployeeDetails> existingEmployeeDetails = employeeDetailsRepository.findById(id);
+    existingEmployeeDetails.ifPresent(employeeDetails -> {
+        EmployeeDetails updatedEmployeeDetails = objectMapper.convertValue(updatedEntityMap.get("EmployeeDetails"), EmployeeDetails.class);
+        employeeDetails.setDepartment(updatedEmployeeDetails.getDepartment());
+        employeeDetails.setPosition(updatedEmployeeDetails.getPosition());
+        employeeDetails.setSalary(updatedEmployeeDetails.getSalary());
+        employeeDetailsRepository.save(employeeDetails);
+    });
+}
+
 
     public String saveEntity(Map<String, Object> entityMap) {
         try {
