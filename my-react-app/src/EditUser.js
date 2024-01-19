@@ -57,7 +57,7 @@ const EditUser = () => {
     };
 
     try {
-      await axios.put(`http://localhost:8081/api/update/${id}`, userWithTime);
+      await axios.put(`http://ec2-54-253-49-79.ap-southeast-2.compute.amazonaws.com:8081/api/update/${id}`, userWithTime);
       navigate('/');
     } catch (error) {
       console.error('Error updating user:', error);
@@ -66,7 +66,7 @@ const EditUser = () => {
 
   const loadUser = async () => {
     try {
-      const result = await axios.get(`http://localhost:8081/api/get/${id}`);
+      const result = await axios.get(`http://ec2-54-253-49-79.ap-southeast-2.compute.amazonaws.com:8081/api/get/${id}`);
       const userFromApi = result.data[0];
 
       setUser({

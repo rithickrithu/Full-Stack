@@ -12,7 +12,7 @@ export default function Home() {
 
     const loadEmployees = async () => {
         try {
-            const result = await axios.get("http://localhost:8081/api/get-all");
+            const result = await axios.get("http://ec2-54-253-49-79.ap-southeast-2.compute.amazonaws.com:8081/api/get-all");
             setEmployees(result.data);
         } catch (error) {
             console.error("Error loading employees:", error);
@@ -20,7 +20,7 @@ export default function Home() {
     };
 
     const deleteEmployee = async (id) => {
-        await axios.delete(`http://localhost:8081/api/delete/${id}`);
+        await axios.delete(`http://ec2-54-253-49-79.ap-southeast-2.compute.amazonaws.com:8081/api/delete/${id}`);
         loadEmployees();
     };
 

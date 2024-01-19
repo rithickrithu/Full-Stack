@@ -44,7 +44,7 @@ export default function AddUser() {
     }));
 
     try {
-      await axios.post("http://localhost:8081/api/save", user);
+      await axios.post("http://ec2-54-253-49-79.ap-southeast-2.compute.amazonaws.com:8081/api/save", user);
       navigate("/");
     } catch (error) {
       console.error("Error adding user:", error);

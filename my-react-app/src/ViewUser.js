@@ -23,7 +23,7 @@ export default function ViewUser() {
 
     const loadUser = async () => {
         try {
-            const result = await axios.get(`http://localhost:8081/api/get/${id}`);
+            const result = await axios.get(`http://ec2-54-253-49-79.ap-southeast-2.compute.amazonaws.com:8081/api/get/${id}`);
             
             const userFromApi = result.data[0];
             
