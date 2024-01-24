@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@CrossOrigin("http://ec2-54-253-49-79.ap-southeast-2.compute.amazonaws.com:3000")
+@CrossOrigin({"http://ec2-54-253-49-79.ap-southeast-2.compute.amazonaws.com","http://ec2-54-253-49-79.ap-southeast-2.compute.amazonaws.com:3000"})
 @RequestMapping("/api")
 public class CombinedController {
 
