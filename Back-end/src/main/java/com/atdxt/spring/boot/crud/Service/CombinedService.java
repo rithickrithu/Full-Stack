@@ -21,8 +21,7 @@ public class CombinedService {
         this.employeeRepository = employeeRepository;
     }
 
-//    @Autowired
-//    private EmployeeRepository employeeRepository;
+
 
     @Autowired
     private EmployeeDetailsRepository employeeDetailsRepository;
@@ -32,22 +31,6 @@ public class CombinedService {
     public List<Employee> getAllEntitiesOrderedById() {
         return employeeRepository.findAllWithDetailsOrderById();
     }
-
-
-
-//    public List<Object> getAllEntities() {
-//        List<Object> combinedEntities = Collections.singletonList(employeeRepository.findAllWithDetails());
-//        return combinedEntities;
-//    }
-//public List<Employee> getAlluser() {
-//    try {
-//        return employeeRepository.findAll();
-//    } catch (Exception e) {
-//        throw new RuntimeException(e);
-//    }
-//}
-
-
 
     public List<Object> getEntityById(Integer id) {
         Optional<Employee> employee = employeeRepository.findById(id);
@@ -61,28 +44,7 @@ public class CombinedService {
         return combinedEntityList;
     }
 
-//    public void updateEntity(Integer id, Map<String, Object> updatedEntityMap) {
-//        Optional<Employee> existingEmployee = employeeRepository.findById(id);
-//
-//        existingEmployee.ifPresent(employee -> {
-//            Employee updatedEmployee = objectMapper.convertValue(updatedEntityMap.get("employee1"), Employee.class);
-//            employee.setName(updatedEmployee.getName());
-//            employee.setAge(updatedEmployee.getAge());
-//            employee.setPhoneNo(updatedEmployee.getPhoneNo());
-//            employee.setCity(updatedEmployee.getCity());
-//            employeeRepository.save(employee);
-//        });
-//
-//        Optional<EmployeeDetails> existingEmployeeDetails = employeeDetailsRepository.findById(id);
-//
-//        existingEmployeeDetails.ifPresent(employeeDetails -> {
-//            EmployeeDetails updatedEmployeeDetails = objectMapper.convertValue(updatedEntityMap.get("EmployeeDetails"), EmployeeDetails.class);
-//            employeeDetails.setDepartment(updatedEmployeeDetails.getDepartment());
-//            employeeDetails.setPosition(updatedEmployeeDetails.getPosition());
-//            employeeDetails.setSalary(updatedEmployeeDetails.getSalary());
-//            employeeDetailsRepository.save(employeeDetails);
-//        });
-//    }
+
 @Transactional
 public void updateEntity(Integer id, Map<String, Object> updatedEntityMap) {
     // Update Employee
